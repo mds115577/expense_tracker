@@ -37,41 +37,92 @@ class HomeView extends StatelessWidget {
                   height: 10,
                 ),
                 Consumer<HomeProvider>(builder: (context, itemProvider, _) {
-                  return Row(
+                  return Column(
                     children: [
-                      HomeButtons(
-                        color: homeProvider.isSelected == 0
-                            ? const Color.fromARGB(255, 207, 182, 212)
-                            : const Color.fromARGB(255, 225, 225, 225),
-                        name: "Today",
-                        onTap: () {
-                          homeProvider.sortData(0);
-                        },
+                      Row(
+                        children: [
+                          HomeButtons(
+                            color: homeProvider.isSelected == 0
+                                ? const Color.fromARGB(255, 207, 182, 212)
+                                : const Color.fromARGB(255, 225, 225, 225),
+                            name: "Today",
+                            onTap: () {
+                              homeProvider.sortData(0);
+                            },
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          HomeButtons(
+                            color: homeProvider.isSelected == 1
+                                ? const Color.fromARGB(255, 207, 182, 212)
+                                : const Color.fromARGB(255, 225, 225, 225),
+                            name: "Weekly",
+                            onTap: () {
+                              homeProvider.sortData(1);
+                            },
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          HomeButtons(
+                            color: homeProvider.isSelected == 2
+                                ? const Color.fromARGB(255, 207, 182, 212)
+                                : const Color.fromARGB(255, 225, 225, 225),
+                            name: "Monthly",
+                            onTap: () {
+                              homeProvider.sortData(2);
+                            },
+                          )
+                        ],
                       ),
                       const SizedBox(
-                        width: 10,
+                        height: 10,
                       ),
-                      HomeButtons(
-                        color: homeProvider.isSelected == 1
-                            ? const Color.fromARGB(255, 207, 182, 212)
-                            : const Color.fromARGB(255, 225, 225, 225),
-                        name: "Weekly",
-                        onTap: () {
-                          homeProvider.sortData(1);
-                        },
+                      const Row(
+                        children: [
+                          Text(
+                            "Today",
+                            style: TextStyle(fontSize: 16),
+                          ),
+                        ],
                       ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      HomeButtons(
-                        color: homeProvider.isSelected == 2
-                            ? const Color.fromARGB(255, 207, 182, 212)
-                            : const Color.fromARGB(255, 225, 225, 225),
-                        name: "Monthly",
-                        onTap: () {
-                          homeProvider.sortData(2);
-                        },
-                      )
+                      ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: 10,
+                          itemBuilder: (context, index) {
+                            return ListTile(
+                              leading: Container(
+                                height: 47,
+                                width: 47,
+                                decoration: const BoxDecoration(
+                                    color: Color.fromARGB(255, 207, 182, 212),
+                                    shape: BoxShape.circle),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(9.0),
+                                  child: Image.asset(
+                                      "assets/bottombar/Home icon.png"),
+                                ),
+                              ),
+                              title: const Text(
+                                "Shopping",
+                                style: TextStyle(fontSize: 16),
+                              ),
+                              subtitle: const Text(
+                                "Clothes an watch",
+                                style: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w800),
+                              ),
+                              trailing: const Text(
+                                "1101.00",
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.w900),
+                              ),
+                            );
+                          })
                     ],
                   );
                 }),
