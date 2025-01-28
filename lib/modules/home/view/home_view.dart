@@ -1,7 +1,10 @@
 import 'package:expense_tracker/modules/home/provider_class/home_provider.dart';
 import 'package:expense_tracker/modules/home/widgets/bar_graph.dart';
 import 'package:expense_tracker/modules/home/widgets/home_buttons.dart';
+import 'package:expense_tracker/modules/statistics/view/statistics_view.dart';
+import 'package:expense_tracker/routes/app_route_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class HomeView extends StatelessWidget {
@@ -59,6 +62,12 @@ class HomeView extends StatelessWidget {
                                 : const Color.fromARGB(255, 225, 225, 225),
                             name: "Weekly",
                             onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const StatisticsView(),
+                                  ));
                               homeProvider.sortData(1);
                             },
                           ),
@@ -92,34 +101,43 @@ class HomeView extends StatelessWidget {
                           physics: const NeverScrollableScrollPhysics(),
                           itemCount: 10,
                           itemBuilder: (context, index) {
-                            return ListTile(
-                              leading: Container(
-                                height: 47,
-                                width: 47,
-                                decoration: const BoxDecoration(
-                                    color: Color.fromARGB(255, 207, 182, 212),
-                                    shape: BoxShape.circle),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(9.0),
-                                  child: Image.asset(
-                                      "assets/bottombar/Home icon.png"),
+                            return InkWell(
+                              onTap: () {
+                                GoRouter.of(context).pushNamed(
+                                    extra: UserModel,
+                                    MyAppRouteConstants.newScreenRouteName,
+                                    pathParameters: {'data': "hai mada"});
+                              },
+                              child: ListTile(
+                                leading: Container(
+                                  height: 47,
+                                  width: 47,
+                                  decoration: const BoxDecoration(
+                                      color: Color.fromARGB(255, 207, 182, 212),
+                                      shape: BoxShape.circle),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(9.0),
+                                    child: Image.asset(
+                                        "assets/bottombar/Home icon.png"),
+                                  ),
                                 ),
-                              ),
-                              title: const Text(
-                                "Shopping",
-                                style: TextStyle(fontSize: 16),
-                              ),
-                              subtitle: const Text(
-                                "Clothes an watch",
-                                style: TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w800),
-                              ),
-                              trailing: const Text(
-                                "1101.00",
-                                style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.w900),
+                                title: const Text(
+                                  "Shopping",
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                                subtitle: const Text(
+                                  "Clothes an watch",
+                                  style: TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w800),
+                                ),
+                                trailing: const Text(
+                                  "1101.00",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w900),
+                                ),
                               ),
                             );
                           })
@@ -133,4 +151,11 @@ class HomeView extends StatelessWidget {
       )),
     );
   }
+}
+
+class UserModel {
+  final String name;
+  final int age;
+
+  UserModel({required this.name, required this.age});
 }
